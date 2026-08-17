@@ -1,0 +1,27 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python Cache & Pytest
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Next.js Build
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+
+# Database & Runtime Logs
+data/*.db
+data/quarantine/*
+logs/*.log
+reports/*.pdf
+reports/*.json
+reports/*.csv
+.DS_Store
+.env

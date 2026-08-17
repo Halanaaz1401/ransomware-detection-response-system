@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDRS | Defensive Security Operations Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen">
+    <!-- Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="h-9 w-9 rounded-lg bg-red-500/20 border border-red-500/50 flex items-center justify-center text-red-400 font-bold">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight tracking-wide text-white">RDRS <span class="text-xs text-slate-400 font-normal ml-2">v1.0.0</span></h1>
+                <p class="text-xs text-slate-400">Ransomware Detection & Response System</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span id="badge-sim" class="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check text-[10px] mr-1"></i> SIMULATION MODE ACTIVE
+            </span>
+            <button onclick="triggerManualScan()" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition shadow-lg shadow-indigo-600/30">
+                <i class="fa-solid fa-magnifying-glass mr-1"></i> Quick Scan Sandbox
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Grid Layout -->
+    <main class="p-6 max-w-7xl mx-auto space-y-6">
+        <!-- Top Metrics Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Threat Level Meter -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
+                <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Current Threat Level</span>
+                <div class="mt-2 flex items-baseline justify-between">
+                    <span id="val-threat-level" class="text-2xl font-black text-emerald-400">NORMAL</span>
+                    <span id="val-threat-score" class="text-sm text-slate-400 font-mono">0 / 100</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
+                    <div id="bar-threat-score" class="bg-emerald-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Observed Events -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
+                <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total File Events</span>
+                <div class="mt-2 text-2xl font-bold text-white font-mono" id="val-total-events">0</div>
+                <p class="text-xs text-slate-500 mt-1">Live streaming telemetry</p>
+            </div>
+
+            <!-- Alerts Raised -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
+                <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Alerts Raised</span>
+                <div class="mt-2 text-2xl font-bold text-amber-400 font-mono" id="val-total-alerts">0</div>
+                <p class="text-xs text-slate-500 mt-1">Heuristic triggers</p>
+            </div>
+
+            <!-- Incidents / Quarantines -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
+                <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Incidents Contained</span>
+                <div class="mt-2 text-2xl font-bold text-red-400 font-mono" id="val-total-incidents">0</div>
+                <p class="text-xs text-slate-500 mt-1">Evidence quarantined</p>
+            </div>
+        </section>
+
+        <!-- Two Column Telemetry Feeds -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Threat Alerts Feed -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 flex flex-col h-[420px]">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <h2 class="font-semibold text-sm text-slate-200 flex items-center">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-2"></i> Threat Alerts & Incidents
+                    </h2>
+                    <span class="text-[11px] text-slate-400 font-mono">Auto-refresh: 3s</span>
+                </div>
+                <div id="alerts-container" class="mt-3 space-y-3 overflow-y-auto pr-1 flex-1 text-sm">
+                    <p class="text-xs text-slate-500 text-center mt-10">No threat alerts generated yet.</p>
+                </div>
+            </div>
+
+            <!-- Live File Events Log -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 flex flex-col h-[420px]">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <h2 class="font-semibold text-sm text-slate-200 flex items-center">
+                        <i class="fa-solid fa-list-check text-indigo-400 mr-2"></i> Real-Time File System Events
+                    </h2>
+                    <span class="text-[11px] text-slate-400 font-mono">Watchdog stream</span>
+                </div>
+                <div id="events-container" class="mt-3 space-y-2 overflow-y-auto pr-1 flex-1 text-xs font-mono">
+                    <p class="text-xs text-slate-500 text-center mt-10">Awaiting file system activity...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

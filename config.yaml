@@ -1,0 +1,40 @@
+system:
+  app_name: "Ransomware Detection and Response System"
+  version: "1.0.0"
+  simulation_mode: true
+
+monitor:
+  watch_paths:
+    - "./data/sandbox"
+  recursive: true
+  ignore_patterns:
+    - "*.tmp"
+    - "*.log"
+    - "*.db"
+    - "*~"
+
+detection:
+  sliding_window_seconds: 60
+  entropy_threshold: 7.2
+  sample_size_bytes: 65536  # 64 KB sampling
+  burst_thresholds:
+    modifications_per_minute: 20
+    renames_per_minute: 10
+    extension_changes_per_minute: 5
+    entropy_spike_count: 5
+
+scoring:
+  weights:
+    rapid_encryption: 40
+    mass_rename: 30
+    high_entropy: 25
+    cpu_spike: 15
+    unknown_program: 10
+  bands:
+    normal_max: 40
+    warning_max: 70
+    critical_min: 70
+
+response:
+  quarantine_dir: "./data/quarantine"
+  auto_isolate_process: true
