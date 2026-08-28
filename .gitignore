@@ -22,3 +22,9 @@ data/quarantine/*
 
 reports/*
 !reports/.gitkeep
+
+.coverage
+htmlcov/
+.pytest_cache/
+__pycache__/
+*.pyc
