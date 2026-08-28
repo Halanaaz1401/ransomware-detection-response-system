@@ -1,4 +1,3 @@
-[README (2).md](https://github.com/user-attachments/files/31545005/README.2.md)
 # RDRS — Ransomware Detection & Response System
 
 A local-first ransomware detection and response platform for identifying ransomware-like file activity through behavioral telemetry, entropy analysis, process monitoring, threat scoring, evidence quarantine, incident persistence, and security reporting.
