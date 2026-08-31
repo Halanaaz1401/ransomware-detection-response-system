@@ -51,6 +51,7 @@ const time = (value?: string) => {
 
 export default function Dashboard() {
   const [scanning, setScanning] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [message, setMessage] = useState("");
 
   const { data: status, mutate: refreshStatus } = useSWR(
@@ -231,7 +232,7 @@ export default function Dashboard() {
                         borderRadius: 5,
                         fontSize: 11,
                       }}
-                      formatter={(v: number) => [v.toFixed(2), "Entropy"]}
+                      formatter={(value) => [String(value ?? ""), "Entropy"]}
                     />
                     <Line
                       type="monotone"
@@ -276,7 +277,7 @@ export default function Dashboard() {
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span
-                        className={`rounded border px-1.5 py-0.5 text-[9px] font-bold ${
+                        className={`rounded border px-2 py-1 text-[11px] font-semibold ${
                           a.severity === "Critical"
                             ? "border-red-500/30 bg-red-500/10 text-red-300"
                             : "border-amber-500/30 bg-amber-500/10 text-amber-300"
@@ -284,14 +285,14 @@ export default function Dashboard() {
                       >
                         {a.severity || "UNKNOWN"} · {a.score ?? "—"}
                       </span>
-                      <span className="font-mono text-[9px] text-slate-600">
+                      <span className="font-mono text-[12px] text-slate-400">
                         {time(a.timestamp)}
                       </span>
                     </div>
-                    <p className="mt-2 text-[11px] font-medium text-slate-300">
+                    <p className="mt-2 text-[14px] font-medium leading-6 text-slate-200">
                       {a.rule_name}
                     </p>
-                    <p className="mt-1 text-[10px] text-slate-600">
+                    <p className="mt-1 text-[13px] text-slate-400">
                       suspect{" "}
                       <span className="font-mono text-indigo-300">
                         {a.suspect_process || "Unknown"}
@@ -316,24 +317,24 @@ export default function Dashboard() {
                 <Terminal className="h-4 w-4 text-slate-500" />
                 <h2 className="text-sm font-semibold">File event stream</h2>
               </div>
-              <p className="mt-1 text-[10px] text-slate-600">
+              <p className="mt-1 text-[13px] text-slate-400">
                 Raw ingestion records · monitored sandbox
               </p>
             </div>
-            <span className="font-mono text-[9px] text-slate-600">
+            <span className="font-mono text-[12px] text-slate-400">
               ./data/sandbox · LIMIT 20
             </span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-left">
-              <thead className="border-b border-slate-800 bg-slate-950/40 text-[9px] uppercase tracking-[.15em] text-slate-600">
+              <thead className="border-b border-slate-800 bg-slate-950/40 text-[11px] font-semibold uppercase tracking-[.15em] text-slate-400">
                 <tr>
                   <th className="px-4 py-2.5">Type</th>
                   <th className="px-4 py-2.5">File</th>
                   <th className="px-4 py-2.5">Entropy</th>
                   <th className="px-4 py-2.5">Timestamp</th>
-                  <th className="px-4 py-2.5 text-right">Signal</th>
+                  <th className="px-4 py-3 text-right">Signal</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/70">
@@ -343,32 +344,32 @@ export default function Dashboard() {
                     const elevated = entropy >= ENTROPY_THRESHOLD;
                     return (
                       <tr key={e.id} className="hover:bg-slate-800/20">
-                        <td className="px-4 py-2.5 text-[10px] uppercase text-slate-500">
+                        <td className="px-4 py-3 text-[13px] uppercase text-slate-400">
                           <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-indigo-400" />
                           {e.event_type || "unknown"}
                         </td>
                         <td
-                          className="max-w-[420px] truncate px-4 py-2.5 font-mono text-[10px] text-slate-300"
+                          className="max-w-[420px] truncate px-4 py-3 font-mono text-[14px] font-medium text-slate-200"
                           title={e.dest_path || e.src_path}
                         >
                           {fileName(e.dest_path || e.src_path)}
                         </td>
-                        <td className="px-4 py-2.5 font-mono text-[10px]">
+                        <td className="px-4 py-3 font-mono text-[14px]">
                           <span className={elevated ? "font-semibold text-red-400" : "text-slate-500"}>
                             {entropy.toFixed(2)}
                           </span>
                         </td>
-                        <td className="px-4 py-2.5 font-mono text-[10px] text-slate-600">
+                        <td className="px-4 py-3 font-mono text-[13px] text-slate-400">
                           {time(e.timestamp)}
                         </td>
-                        <td className="px-4 py-2.5 text-right">
+                        <td className="px-4 py-3 text-right">
                           {elevated ? (
-                            <span className="text-[9px] font-semibold uppercase text-red-400">
+                            <span className="text-[13px] font-semibold uppercase text-red-400">
                               <Zap className="mr-1 inline h-3 w-3" />
                               Elevated
                             </span>
                           ) : (
-                            <span className="text-[9px] uppercase text-slate-700">
+                            <span className="text-[13px] uppercase text-slate-500">
                               Baseline
                             </span>
                           )}
@@ -470,10 +471,10 @@ function Panel({
     <div className="overflow-hidden rounded-lg border border-slate-800 bg-slate-900/40">
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
         <div>
-          <h2 className="text-sm font-semibold text-slate-200">{title}</h2>
-          <p className="mt-1 text-[10px] text-slate-600">{subtitle}</p>
+          <h2 className="text-[16px] font-semibold text-slate-100">{title}</h2>
+          <p className="mt-1 text-[13px] text-slate-400">{subtitle}</p>
         </div>
-        <span className="font-mono text-[9px] text-slate-600">{right}</span>
+        <span className="font-mono text-[12px] text-slate-400">{right}</span>
       </div>
       {children}
     </div>
@@ -488,3 +489,6 @@ function Telemetry({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+
+

@@ -1,26 +1,577 @@
 @import "tailwindcss";
 
+/* =========================================================
+   RDRS — Matte Enterprise SOC UI
+   Anti-Slop Design System
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --rdrs-bg: #0D1117;
+  --rdrs-panel: #161B22;
+  --rdrs-border: #21262D;
+
+  --rdrs-text: #E6EDF0;
+  --rdrs-muted: #8B949E;
+
+  --rdrs-critical: #DA3633;
+  --rdrs-warning: #D29922;
+  --rdrs-success: #30A46C;
+  --rdrs-blue: #58A6FF;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--rdrs-bg) !important;
+  color: var(--rdrs-text) !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    Inter,
+    "Segoe UI",
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+  line-height: 1.45;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* =========================================================
+   CONSOLE
+   ========================================================= */
+
+main {
+  min-height: 100vh !important;
+  background: var(--rdrs-bg) !important;
+  color: var(--rdrs-text) !important;
+}
+
+main > div {
+  max-width: 1540px !important;
+  padding: 28px 34px 40px !important;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+main header {
+  border-bottom: 1px solid var(--rdrs-border) !important;
+  padding-bottom: 20px !important;
+}
+
+main header h1 {
+  color: var(--rdrs-text) !important;
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.025em !important;
+}
+
+main header p {
+  color: var(--rdrs-muted) !important;
+  font-size: 12px !important;
+}
+
+main header span {
+  color: var(--rdrs-muted);
+}
+
+/* Header status pills */
+
+main header > div > div:last-child > span {
+  background: var(--rdrs-panel) !important;
+  border: 1px solid var(--rdrs-border) !important;
+  border-radius: 4px !important;
+  color: var(--rdrs-muted) !important;
+  padding: 7px 10px !important;
+  font-size: 10px !important;
+}
+
+/* Online dot */
+
+main header .bg-emerald-400 {
+  background: var(--rdrs-success) !important;
+}
+
+/* Simulation dot */
+
+main header .bg-amber-400 {
+  background: var(--rdrs-warning) !important;
+}
+
+/* =========================================================
+   HEADER BUTTONS
+   ========================================================= */
+
+main header button {
+  min-height: 36px !important;
+
+  background: var(--rdrs-panel) !important;
+  border: 1px solid var(--rdrs-border) !important;
+  border-radius: 4px !important;
+
+  color: var(--rdrs-text) !important;
+
+  box-shadow: none !important;
+  text-shadow: none !important;
+
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+main header button:hover {
+  background: #1C2128 !important;
+  border-color: #30363D !important;
+}
+
+/* Scan button — flat blue, NOT neon */
+
+main header button:last-child {
+  background: #1F6FEB !important;
+  border-color: #1F6FEB !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+main header button:last-child:hover {
+  background: #388BFD !important;
+  border-color: #388BFD !important;
+}
+
+/* =========================================================
+   KPI / STAT CARDS
+   ========================================================= */
+
+main section:first-of-type {
+  gap: 14px !important;
+}
+
+main section:first-of-type > div {
+  min-height: 132px !important;
+
+  background: var(--rdrs-panel) !important;
+  border: 1px solid var(--rdrs-border) !important;
+  border-radius: 5px !important;
+
+  padding: 20px !important;
+
+  box-shadow: none !important;
+}
+
+main section:first-of-type > div:hover {
+  border-color: #30363D !important;
+}
+
+/* Labels */
+
+main section:first-of-type p:first-child {
+  color: var(--rdrs-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* Main metric numbers */
+
+main section:first-of-type .text-2xl {
+  color: var(--rdrs-text) !important;
+
+  font-size: 30px !important;
+  line-height: 1.1 !important;
+  font-weight: 600 !important;
+
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.025em !important;
+}
+
+/* Secondary metric text */
+
+main section:first-of-type p:last-child {
+  color: var(--rdrs-muted) !important;
+  font-size: 11px !important;
+}
+
+/* =========================================================
+   CRITICAL POSTURE
+   ========================================================= */
+
+/* Critical text */
+
+main section:first-of-type > div:first-child .text-red-400 {
+  color: var(--rdrs-critical) !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+}
+
+/* REMOVE THE THICK RED PROGRESS BAR */
+
+main section:first-of-type > div:first-child .bg-red-500 {
+  display: none !important;
+}
+
+/* Replace it with a clean left state indicator */
+
+main section:first-of-type > div:first-child {
+  border-left: 3px solid var(--rdrs-critical) !important;
+}
+
+/* Warning posture */
+
+main section:first-of-type > div:first-child .text-amber-300 {
+  color: var(--rdrs-warning) !important;
+}
+
+/* Normal posture */
+
+main section:first-of-type > div:first-child .text-emerald-300 {
+  color: var(--rdrs-success) !important;
+}
+
+/* =========================================================
+   GENERAL PANELS
+   ========================================================= */
+
+main section:nth-of-type(2) > div,
+main section:nth-of-type(3) {
+  background: var(--rdrs-panel) !important;
+  border: 1px solid var(--rdrs-border) !important;
+  border-radius: 5px !important;
+
+  box-shadow: none !important;
+}
+
+/* Panel headings */
+
+main section h2 {
+  color: var(--rdrs-text) !important;
+  font-size: 15px !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+}
+
+main section h2 + p {
+  color: var(--rdrs-muted) !important;
+  font-size: 11px !important;
+}
+
+/* Panel separators */
+
+main section > div > div {
+  border-color: var(--rdrs-border) !important;
+}
+
+/* =========================================================
+   ENTROPY CHART
+   ========================================================= */
+
+.recharts-wrapper {
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif !important;
+}
+
+/* Grid */
+
+.recharts-cartesian-grid line {
+  stroke: var(--rdrs-border) !important;
+  stroke-width: 1 !important;
+  opacity: 1 !important;
+}
+
+/* Axis */
+
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: var(--rdrs-border) !important;
+}
+
+.recharts-text {
+  fill: var(--rdrs-muted) !important;
+  font-size: 10px !important;
+}
+
+/* Main telemetry line */
+
+.recharts-line-curve {
+  stroke: var(--rdrs-blue) !important;
+  stroke-width: 2 !important;
+  filter: none !important;
+}
+
+/* Threshold */
+
+.recharts-reference-line-line {
+  stroke: var(--rdrs-critical) !important;
+  stroke-width: 1 !important;
+  stroke-dasharray: 5 5 !important;
+  filter: none !important;
+}
+
+/* No chart glow / shadow / fill */
+
+.recharts-area-area,
+.recharts-line-dots,
+.recharts-active-dot {
+  filter: none !important;
+}
+
+/* =========================================================
+   CHART TOOLTIP
+   ========================================================= */
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+.recharts-default-tooltip {
+  background: var(--rdrs-panel) !important;
+  border: 1px solid var(--rdrs-border) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.recharts-tooltip-label,
+.recharts-tooltip-item {
+  color: var(--rdrs-text) !important;
+  font-size: 11px !important;
+}
+
+/* =========================================================
+   TELEMETRY SUMMARY
+   ========================================================= */
+
+main section:nth-of-type(2) .border-t {
+  background: var(--rdrs-panel) !important;
+  border-color: var(--rdrs-border) !important;
+}
+
+main section:nth-of-type(2) .border-t > div {
+  border-color: var(--rdrs-border) !important;
+}
+
+main section:nth-of-type(2) .border-t p:first-child {
+  color: var(--rdrs-muted) !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+}
+
+main section:nth-of-type(2) .border-t p:last-child {
+  color: var(--rdrs-text) !important;
+  font-size: 11px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   DETECTION QUEUE
+   ========================================================= */
+
+main section:nth-of-type(2) > div:last-child {
+  background: var(--rdrs-panel) !important;
+}
+
+/* Queue rows */
+
+main section:nth-of-type(2) > div:last-child > div:last-child > div {
+  border-color: var(--rdrs-border) !important;
+  transition: background-color 100ms linear;
+}
+
+main section:nth-of-type(2) > div:last-child > div:last-child > div:hover {
+  background: #1C2128 !important;
+}
+
+/* Queue rule text */
+
+main section:nth-of-type(2) > div:last-child p {
+  color: var(--rdrs-text) !important;
+  font-size: 11px !important;
+}
+
+main section:nth-of-type(2) > div:last-child p:last-child {
+  color: var(--rdrs-muted) !important;
+}
+
+/* Process name */
+
+main section:nth-of-type(2) > div:last-child .text-indigo-300 {
+  color: var(--rdrs-blue) !important;
+}
+
+/* =========================================================
+   ALERT BADGES
+   ========================================================= */
+
+/* Warning badge */
+
+main .border-amber-500\/30 {
+  background: rgba(210, 153, 34, 0.10) !important;
+  border: 1px solid var(--rdrs-warning) !important;
+  color: var(--rdrs-warning) !important;
+
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+
+  font-size: 9px !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+}
+
+/* Critical badge */
+
+main .border-red-500\/30 {
+  background: rgba(218, 54, 51, 0.10) !important;
+  border: 1px solid var(--rdrs-critical) !important;
+  color: var(--rdrs-critical) !important;
+
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+
+  font-size: 9px !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+}
+
+/* =========================================================
+   FILE EVENT STREAM
+   ========================================================= */
+
+main section:nth-of-type(3) {
+  overflow: hidden !important;
+}
+
+main section:nth-of-type(3) thead {
+  background: #161B22 !important;
+  border-color: var(--rdrs-border) !important;
+}
+
+main section:nth-of-type(3) th {
+  color: var(--rdrs-muted) !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+}
+
+main section:nth-of-type(3) tbody tr {
+  background: var(--rdrs-panel) !important;
+  border-color: var(--rdrs-border) !important;
+
+  transition: background-color 100ms linear;
+}
+
+main section:nth-of-type(3) tbody tr:hover {
+  background: #1C2128 !important;
+}
+
+main section:nth-of-type(3) td {
+  border-color: var(--rdrs-border) !important;
+}
+
+/* Event type */
+
+main section:nth-of-type(3) td {
+  color: var(--rdrs-muted) !important;
+}
+
+/* File names */
+
+main section:nth-of-type(3) td:nth-child(2) {
+  color: var(--rdrs-text) !important;
+}
+
+/* Entropy */
+
+main section:nth-of-type(3) td:nth-child(3) {
+  font-variant-numeric: tabular-nums;
+}
+
+main section:nth-of-type(3) .text-red-400 {
+  color: var(--rdrs-critical) !important;
+}
+
+/* Event dot */
+
+main section:nth-of-type(3) .bg-indigo-400 {
+  background: var(--rdrs-blue) !important;
+}
+
+/* Elevated signal */
+
+main section:nth-of-type(3) .text-red-400 {
+  color: var(--rdrs-critical) !important;
+}
+
+/* Baseline */
+
+main section:nth-of-type(3) .text-slate-700 {
+  color: var(--rdrs-muted) !important;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+main footer {
+  border-color: var(--rdrs-border) !important;
+  color: var(--rdrs-muted) !important;
+}
+
+main footer span {
+  color: var(--rdrs-muted) !important;
+}
+
+/* =========================================================
+   REMOVE AI-SLOP VISUAL EFFECTS
+   ========================================================= */
+
+* {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+button:focus-visible {
+  outline: 2px solid #58A6FF !important;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  main > div {
+    padding: 22px 18px 32px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  main > div {
+    padding: 18px 12px 28px !important;
+  }
 }
