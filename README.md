@@ -1,7 +1,6 @@
-[RDRS_README_FINAL.md](https://github.com/user-attachments/files/31649703/RDRS_README_FINAL.md)
 # RDRS — Ransomware Detection & Response System
 
-> ** Security Engineering Project**  
+> **Internship Security Engineering Project**  
 > A local-first ransomware detection and response platform for
 > identifying ransomware-like filesystem behavior through behavioral
 > telemetry, Shannon entropy analysis, process monitoring, threat
@@ -18,20 +17,99 @@ research
 
 ------------------------------------------------------------------------
 
+## Technology Stack
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST_API-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI-4051B5?style=for-the-badge)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Local_DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Pydantic](https://img.shields.io/badge/Pydantic-Validation-E92063?style=for-the-badge)
+![psutil](https://img.shields.io/badge/psutil-Process_Telemetry-444444?style=for-the-badge)
+![Pytest](https://img.shields.io/badge/Pytest-8_passed-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
+
+![Next.js](https://img.shields.io/badge/Next.js-Dashboard-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-UI-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-Dashboard-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind
+CSS](https://img.shields.io/badge/Tailwind_CSS-Styling-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-Telemetry-8884D8?style=for-the-badge)
+![Lucide](https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge)
+
+</p>
+
+### Stack at a glance
+
+| Area                 | Technologies                                   |
+|----------------------|------------------------------------------------|
+| Backend              | Python, FastAPI, Uvicorn                       |
+| Detection            | Python, Shannon entropy, behavioral heuristics |
+| Process telemetry    | psutil                                         |
+| Persistence          | SQLAlchemy, SQLite                             |
+| Validation & testing | Pydantic, Pytest                               |
+| Frontend             | Next.js, React, TypeScript                     |
+| UI                   | Tailwind CSS, Lucide React                     |
+| Visualization        | Recharts                                       |
+| Reporting            | JSON, CSV, PDF                                 |
+| Configuration        | YAML                                           |
+
+------------------------------------------------------------------------
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Detection Pipeline](#detection-pipeline)
+- [Detection Engine](#detection-engine)
+- [Threat Scoring](#threat-scoring)
+- [Process Telemetry](#process-telemetry)
+- [Incident Response](#incident-response)
+- [Evidence Quarantine](#evidence-quarantine)
+- [REST API](#rest-api)
+- [Dashboard](#dashboard)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Running RDRS](#running-rdrs)
+- [Demonstration](#demonstration)
+- [Testing](#testing)
+- [Reports & Evidence](#reports--evidence)
+- [Security & Safety](#security--safety)
+- [Limitations](#limitations)
+- [Future Enhancements](#future-enhancements)
+- [Project Status](#project-status)
+- [Author](#author)
+
+------------------------------------------------------------------------
+
 ## Overview
 
 RDRS demonstrates an end-to-end defensive ransomware detection and
 response workflow in a controlled local environment.
 
-The system correlates rapid file modifications, mass renames, suspicious
-extension changes, Shannon entropy, sliding-window activity, CPU/I/O
-observations, process telemetry, and unknown-process context. These
-signals are converted into a threat score and severity level. Critical
-activity triggers evidence preservation, incident creation, and a
-simulation-safe containment record.
+The system correlates:
+
+- Rapid file modification activity
+- Mass file renames
+- Suspicious extension changes
+- Shannon entropy
+- Sliding-window activity rates
+- CPU and I/O observations
+- Process telemetry
+- Unknown/suspicious process context
+- Weighted threat scoring
+- Severity classification
+- Alert and incident persistence
+- Evidence quarantine
+- Simulation-safe response
+- JSON, CSV, and PDF reporting
 
 The backend is exposed through **FastAPI** and the operational data is
 presented through a **Next.js dashboard**.
+
+------------------------------------------------------------------------
 
 ## Architecture
 
@@ -73,6 +151,8 @@ flowchart LR
 | Dashboard   | Provides analyst-facing visibility                   |
 | Reporting   | Produces forensic/security reports                   |
 
+------------------------------------------------------------------------
+
 ## Detection Pipeline
 
 ``` mermaid
@@ -97,6 +177,8 @@ flowchart TD
     N --> O["Record Simulated Containment"]
     O --> Q["Dashboard / Reports"]
 ```
+
+------------------------------------------------------------------------
 
 ## Detection Engine
 
@@ -126,6 +208,8 @@ Entropy spike count:     5
 High entropy is treated as a supporting behavioral signal, not proof of
 ransomware by itself.
 
+------------------------------------------------------------------------
+
 ## Threat Scoring
 
 | Detection Signal | Weight |
@@ -152,6 +236,8 @@ flowchart LR
 
 The displayed threat posture is normalized to a maximum of **100**.
 
+------------------------------------------------------------------------
+
 ## Process Telemetry
 
 RDRS collects process context to correlate execution activity with
@@ -169,6 +255,8 @@ Parent PID
 Suspicious flag
 Timestamp
 ```
+
+------------------------------------------------------------------------
 
 ## Incident Response
 
@@ -199,6 +287,8 @@ action such as:
 SIMULATION: Would terminate PID <pid>
 ```
 
+------------------------------------------------------------------------
+
 ## Evidence Quarantine
 
 ``` text
@@ -210,6 +300,8 @@ data/
 
 The purpose is to preserve evidence for investigation rather than
 immediately destroying the original sandbox artifacts.
+
+------------------------------------------------------------------------
 
 ## REST API
 
@@ -235,6 +327,8 @@ http://127.0.0.1:8000/docs
 | GET    | `/processes` | Process telemetry            |
 | POST   | `/scan`      | Scan the configured target   |
 
+------------------------------------------------------------------------
+
 ## Dashboard
 
 The Next.js dashboard provides analyst-facing visibility into:
@@ -243,7 +337,7 @@ The Next.js dashboard provides analyst-facing visibility into:
 - Observed events
 - Threat alerts
 - Quarantined evidence
-- Entropy telemetry
+- Shannon entropy telemetry
 - Raw filesystem telemetry
 - Process telemetry
 - Response state
@@ -266,23 +360,7 @@ flowchart LR
 The dashboard identifies the environment as **Simulation Mode** during
 the controlled demonstration.
 
-## Technology Stack
-
-| Technology   | Role                           |
-|--------------|--------------------------------|
-| Python       | Detection and response backend |
-| FastAPI      | REST API                       |
-| Uvicorn      | ASGI server                    |
-| SQLAlchemy   | Database persistence           |
-| SQLite       | Local database                 |
-| Pydantic     | Data validation                |
-| psutil       | Process telemetry              |
-| Pytest       | Automated testing              |
-| Next.js      | Web dashboard                  |
-| React        | Dashboard UI                   |
-| Tailwind CSS | Dashboard styling              |
-| Recharts     | Telemetry visualization        |
-| Lucide React | Interface icons                |
+------------------------------------------------------------------------
 
 ## Project Structure
 
@@ -320,6 +398,8 @@ rdrs/
 └── README.md
 ```
 
+------------------------------------------------------------------------
+
 ## Configuration
 
 ``` yaml
@@ -347,6 +427,8 @@ scoring:
 For the internship demonstration, keep `simulation_mode: true` and
 restrict monitoring to the dedicated sandbox.
 
+------------------------------------------------------------------------
+
 ## Installation
 
 ### Prerequisites
@@ -372,6 +454,8 @@ npm install
 cd ..
 ```
 
+------------------------------------------------------------------------
+
 ## Running RDRS
 
 ### Start the backend
@@ -395,6 +479,10 @@ Then open:
 http://localhost:3000
 ```
 
+Keep both services running during the demonstration.
+
+------------------------------------------------------------------------
+
 ## Demonstration
 
 Use only controlled test activity inside:
@@ -403,7 +491,7 @@ Use only controlled test activity inside:
 ./data/sandbox
 ```
 
-Recommended sequence:
+### Recommended sequence
 
 1.  Start the backend.
 2.  Start the dashboard.
@@ -430,6 +518,7 @@ sequenceDiagram
     RDRS->>RDRS: Entropy + behavioral analysis
     RDRS->>RDRS: Process correlation
     RDRS->>RDRS: Calculate threat score
+
     alt Normal
         RDRS->>DB: Persist telemetry
     else Warning
@@ -439,10 +528,16 @@ sequenceDiagram
         RDRS->>Sandbox: Preserve evidence
         RDRS->>RDRS: Record simulated containment
     end
+
     DB->>Dashboard: Events / alerts / incidents
     RDRS->>Dashboard: Current telemetry
     Analyst->>Dashboard: Review security posture
 ```
+
+> Only create test artifacts inside the dedicated sandbox. Do not point
+> the monitor at personal, operating-system, or production directories.
+
+------------------------------------------------------------------------
 
 ## Testing
 
@@ -457,6 +552,8 @@ Current validated result:
 ``` text
 8 passed
 ```
+
+------------------------------------------------------------------------
 
 ## Reports & Evidence
 
@@ -483,6 +580,8 @@ data/quarantine/
 These artifacts provide a reproducible record of the simulated detection
 and response workflow.
 
+------------------------------------------------------------------------
+
 ## Verification Checklist
 
 ``` text
@@ -507,6 +606,8 @@ and response workflow.
 [ ] Generated artifacts are excluded from Git
 ```
 
+------------------------------------------------------------------------
+
 ## Security & Safety
 
 RDRS is intended for controlled defensive security research and
@@ -521,6 +622,8 @@ internship demonstration.
 
 > Do not configure the system to monitor or modify sensitive production
 > directories during experimentation.
+
+------------------------------------------------------------------------
 
 ## Limitations
 
@@ -539,6 +642,8 @@ production EDR platform.
 - The dashboard is primarily designed for local analysis and
   demonstration.
 
+------------------------------------------------------------------------
+
 ## Future Enhancements
 
 - Production-grade process isolation
@@ -556,6 +661,8 @@ production EDR platform.
 - Expanded integration testing
 - Advanced incident correlation
 - Analyst investigation workflows
+
+------------------------------------------------------------------------
 
 ## Project Status
 
@@ -598,12 +705,16 @@ Security Reporting
 Analyst Dashboard
 ```
 
+------------------------------------------------------------------------
+
 ## Author
 
 **Hala Naaz**  
 Cybersecurity Professional · GenAI Developer · Security Tool Builder
 
 **AshlynxCyber**
+
+------------------------------------------------------------------------
 
 ## Disclaimer
 
